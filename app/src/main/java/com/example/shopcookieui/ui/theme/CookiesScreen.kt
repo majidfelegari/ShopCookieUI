@@ -10,10 +10,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.Badge
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -35,25 +43,81 @@ import com.example.shopcookieui.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CookiesScreenUi(){
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+fun CookiesScreenUi() {
+    val scrollBehavior =
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopBar(scrollBehavior = scrollBehavior)
         },
-        bottomBar = {},
+        bottomBar = {
+            NavBar()
+        },
         contentColor = Color.DarkGray,
         content = { contentPadding ->
             val scrollState = rememberScrollState()
-            Column (
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(contentPadding)
                     .background(Color.DarkGray)
                     .verticalScroll(scrollState)
-            ){
+            ) {
             }
+        }
+    )
+}
+
+@Composable
+fun NavBar() {
+    NavigationBar(
+        modifier = Modifier
+            .padding(8.dp)
+            .clip(
+                RoundedCornerShape(
+                    topStart = 35.dp,
+                    topEnd = 35.dp,
+                    bottomStart = 18.dp,
+                    bottomEnd = 18.dp
+                )
+            ),
+        containerColor = Color(0xFF3C3939),
+        contentColor = Color(0xFFC9B683),
+        content = {
+            NavigationBarItem(
+                selected = false, onClick = { }, icon = {
+                Icon(
+                    imageVector = Icons.Outlined.Home, contentDescription = "",
+                    tint = Color(0xFFC9B683)
+                )
+            },
+                label = {
+                    Text(text = "home", color = Color(0xFFC9B683))
+                }
+            )
+            NavigationBarItem(
+                selected = false, onClick = { }, icon = {
+                    Icon(
+                        imageVector = Icons.Outlined.ShoppingCart, contentDescription = "",
+                        tint = Color(0xFFC9B683)
+                    )
+                },
+                label = {
+                    Text(text = "cart", color = Color(0xFFC9B683))
+                }
+            )
+            NavigationBarItem(
+                selected = false, onClick = { }, icon = {
+                    Icon(
+                        imageVector = Icons.Outlined.Search, contentDescription = "",
+                        tint = Color(0xFFC9B683)
+                    )
+                },
+                label = {
+                    Text(text = "search", color = Color(0xFFC9B683))
+                }
+            )
         }
     )
 }
@@ -61,28 +125,36 @@ fun CookiesScreenUi(){
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(scrollBehavior: TopAppBarScrollBehavior, modifier: Modifier = Modifier) {
-    CenterAlignedTopAppBar(title = { Text(
-        text = "Cookies",
-        fontSize = 30.sp,
-        fontWeight = FontWeight.Bold,
-        color = Color.White,
-        fontFamily = FontFamily(Font(R.font.cabin))
-    )
-    },
+    CenterAlignedTopAppBar(
+        title = {
+            Text(
+                text = "Cookies",
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                fontFamily = FontFamily(Font(R.font.cabin))
+            )
+        },
         modifier = modifier
             .wrapContentSize()
             .padding(6.dp),
 
         navigationIcon = {
-            Image(painter = painterResource(id = R.drawable.logo), contentDescription = "",
+            Image(
+                painter = painterResource(id = R.drawable.logo), contentDescription = "",
                 modifier
                     .size(70.dp)
-                    .padding(6.dp))
+                    .padding(6.dp)
+            )
         },
         actions = {
-            Box(modifier = modifier.size(55.dp),
-                contentAlignment = Alignment.TopEnd){
-                Image(painter = painterResource(id = R.drawable.shopping_bag_24), contentDescription = "",
+            Box(
+                modifier = modifier.size(55.dp),
+                contentAlignment = Alignment.TopEnd
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.shopping_bag_24),
+                    contentDescription = "",
                     modifier = modifier
                         .clip(CircleShape)
                         .size(45.dp)
@@ -90,8 +162,9 @@ fun TopBar(scrollBehavior: TopAppBarScrollBehavior, modifier: Modifier = Modifie
                         .background(Color.Black)
                         .padding(5.dp)
                 )
-                Badge{
-                    Text(text = "8", fontSize = 18.sp, fontWeight = FontWeight.Bold,
+                Badge {
+                    Text(
+                        text = "8", fontSize = 18.sp, fontWeight = FontWeight.Bold,
                         fontFamily = FontFamily(Font(R.font.sora))
                     )
                 }
